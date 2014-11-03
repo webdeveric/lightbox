@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html lang="en-US" class="no-js ie ie6 lte7 lte8 lte9"><![endif]-->
+<!--[if IE 7 ]><html lang="en-US" class="no-js ie ie7 lte7 lte8 lte9"><![endif]-->
+<!--[if IE 8 ]><html lang="en-US" class="no-js ie ie8 lte8 lte9"><![endif]-->
+<!--[if IE 9 ]><html lang="en-US" class="no-js ie ie9 lte9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"><!--<![endif]-->
+<head>
+<title>lightbox</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1" />
+<link media="all" type="text/css" rel="stylesheet" href="css/main.css" />
+<link media="all" type="text/css" rel="stylesheet" href="css/lightbox.css" />
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="js/lightbox.js"></script>
+<script>
+$( function() {
+
+    $('.button').lightbox({
+    }).on("lightbox-closed", function() {
+        // alert("You just closed the lightbox.");
+    });
+});
+</script>
+</head>
+<body>
+
+<nav>
+    <a class="button" data-lightbox-content="Hello">Say Hello</a><a href="test.html" class="button">Fetch HTML</a><a href="json.php" class="button">Fetch JSON</a>
+</nav>
+
+<div id="content">
+    <h1>A Head in the Polls</h1> <p>Now what? No! The kind with looting and maybe starting a few fires! I love this planet! I've got wealth, fame, and access to the depths of sleaze that those things bring. Yes, except the Dave Matthews Band doesn't rock.</p> <h2>Bender Gets Made</h2> <p>I haven't felt much of anything since my guinea pig died. Look, last night was a mistake. Morbo will now introduce tonight's candidates&hellip; PUNY HUMAN NUMBER ONE, PUNY HUMAN NUMBER TWO, and Morbo's good friend, Richard Nixon. Why, those are the Grunka-Lunkas! They work here in the Slurm factory. I saw you with those two "ladies of the evening" at Elzars. Explain that.</p> <ul> <li>I'm a thing.</li> <li>Why would I want to know that?</li> <li>Is today's hectic lifestyle making you tense and impatient?</li> </ul> <h3>That Darn Katz!</h3> <p>Good man. Nixon's pro-war and pro-family. As an interesting side note, as a head without a body, I envy the dead. Maybe I love you so much I love you no matter who you are pretending to be. They're like sex, except I'm having them!</p> <h4>A Pharaoh to Remember</h4> <p>Humans dating robots is sick. You people wonder why I'm still single? It's 'cause all the fine robot sisters are dating humans! You can see how I lived before I met you. You guys realize you live in a sewer, right? Kids have names? Bender, we're trying our best.</p> <ol> <li>Do a flip!</li> <li>Okay, I like a challenge.</li> <li>Can I use the gun?</li> </ol> <h5>Bendin' in the Wind</h5> <p>And yet you haven't said what I told you to say! How can any of us trust you? Large bet on myself in round one. Large bet on myself in round one. Ok, we'll go deliver this crate like professionals, and then we'll go ride the bumper cars. Soothe us with sweet lies. Do a flip!</p> <h6>Mother's Day</h6> <p>Wow, you got that off the Internet? In my day, the Internet was only used to download pornography. When will that be? There, now he's trapped in a book I wrote: a crummy world of plot holes and spelling errors!</p> <p>I can explain. It's very valuable. Have you ever tried just turning off the TV, sitting down with your children, and hitting them? Yes! In your face, Gandhi!</p> <p>Five hours? Aw, man! Couldn't you just get me the death penalty? Can I use the gun? And until then, I can never die?</p> <p>I don't 'need' to drink. I can quit anytime I want! I guess if you want children beaten, you have to do it yourself. For one beautiful night I knew what it was like to be a grandmother. Subjugated, yet honored.</p> <p>You can crush me but you can't crush my spirit! Oh right. I forgot about the battle. Is the Space Pope reptilian!? I usually try to keep my sadness pent up inside where it can fester quietly as a mental illness. I've got to find a way to escape the horrible ravages of youth. Suddenly, I'm going to the bathroom like clockwork, every three hours. And those jerks at Social Security stopped sending me checks. Now 'I'' have to pay ''them'! That's the ONLY thing about being a slave.</p> <p>But, like most politicians, he promised more than he could deliver. Maybe I love you so much I love you no matter who you are pretending to be. I'm a thing. With gusto.</p> <p>Are you crazy? I can't swallow that. Whoa a real live robot; or is that some kind of cheesy New Year's costume? The key to victory is discipline, and that means a well made bed. You will practice until you can make your bed in your sleep.</p> <p>And I'd do it again! And perhaps a third time! But that would be it. Who said that? SURE you can die! You want to die?! Man, I'm sore all over. I feel like I just went ten rounds with mighty Thor. And when we woke up, we had these bodies. Ah, the 'Breakfast Club' soundtrack! I can't wait til I'm old enough to feel ways about stuff!</p> <p>I daresay that Fry has discovered the smelliest object in the known universe! Yes, except the Dave Matthews Band doesn't rock. That's a popular name today. Little "e", big "B"? Aww, it's true. I've been hiding it for so long.</p> 
+</div>
+
+<div class="lightbox">
+    <div class="lightbox-overlay"></div>
+    <div class="lightbox-frame">
+        <div class="lightbox-wrapper">
+            <div class="lightbox-close">&times;</div><div class="lightbox-content"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
