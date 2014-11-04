@@ -1,28 +1,30 @@
-( function ( factory ) {
-    if ( typeof define === 'function' && define.amd ) {
-        define( ['jquery'], factory );
-    } else {
-        factory( jQuery );
-    }
-}( function( $ ) {
+(function(factory) {
     "use strict";
 
-    $.fn.lightbox = function( options ) {
+    if (typeof define === "function" && define.amd) {
+        define([ "jquery" ], factory);
+    } else {
+        factory(jQuery);
+    }
 
-        var settings = $.extend({}, $.fn.lightbox.defaults, options);
+}(function($) {
+    "use strict";
 
-        var data = $.fn.lightbox.data;
+    $.fn.lightbox = function(options) {
 
-        function checkESC( event )
+        var settings = $.extend({}, $.fn.lightbox.defaults, options),
+            data = $.fn.lightbox.data;
+
+        function checkESC(event)
         {
-            if ( event.keyCode == 27 && settings.closeOnESC ) {
+            if (event.keyCode == 27 && settings.closeOnESC) {
                 close();
-            } 
+            }
         }
 
         function listenforESC()
         {
-            $(document).on("keyup.lightbox", checkESC );
+            $(document).on("keyup.lightbox", checkESC);
         }
 
         function dontlistenforESC()
@@ -30,112 +32,111 @@
             $(document).unbind("keyup.lightbox");
         }
 
-        function isOpen()
-        {
-            return $( settings.container ).hasClass( settings.isOpenClass );
-        }
+        // function isOpen()
+        // {
+        //     return $(settings.container).hasClass(settings.isOpenClass);
+        // }
 
-        function toggle( state )
+        function toggle(state)
         {
             state = state || false;
 
-            if ( data.container ) {
-                
-            }
+            data.container = $(settings.container);
 
-            data.container = $( settings.container );
-
-            if ( settings.className ) {
+            if (settings.className) {
                 data.container.toggleClass(settings.className, state);
             }
 
             data.container.toggleClass(settings.isOpenClass, state);
-            $( document.documentElement ).toggleClass("lightbox-open", state);
+            // $(document).trigger("lightbox-" + (state ? "open" : "close"), [ state ] );
+            $(document).trigger("lightbox-state-change", [ state, settings ] );
+
         }
 
-        function close( event )
+        function close(event)
         {
-            if ( event ) {
+            if (event) {
                 event.preventDefault();
                 event.stopPropagation();
-
-                console.log(event);
-
-                if ( event.target != event.currentTarget ) {
+                // console.log(event);
+                if (event.target != event.currentTarget) {
                     return;
                 }
             }
 
             toggle(false);
 
-            if ( data.currentTarget ) {
-                data.currentTarget.removeClass( settings.activeClass ).trigger( "lightbox-closed" );
+            if (data.currentTarget) {
+                data.currentTarget.removeClass(settings.activeClass).trigger("lightbox-closed");
             }
 
             dontlistenforESC();
         }
 
-        function load( content )
+        function load(content)
         {
-            // console.info( content );
-            $( settings.content ).empty().append( content );
+            // console.info(content);
+            $(settings.content).empty().append(content);
         }
 
-        function fetch( url )
+        function fetch(url)
         {
-            $.ajax( url, {}).done( function( data, textStatus, jqXHR ) {
-                if ( settings.processAjaxResponse ) {
-                    data = settings.processAjaxResponse( data, textStatus, jqXHR );
+            $.ajax(url, {}).done(function(data, textStatus, jqXHR) {
+                if (settings.processAjaxResponse) {
+                    data = settings.processAjaxResponse(data, textStatus, jqXHR);
                 }
-                load( data );
-                toggle( true );
-            } );
+                load(data);
+                toggle(true);
+            });
         }
 
-        function handleClick( event )
+        function handleClick(event)
         {
             listenforESC();
 
-            var container = $( settings.container );
+            var container = $(settings.container);
 
-            if ( data.currentTarget ) {
-                data.currentTarget.removeClass( settings.activeClass );
+            if (data.currentTarget) {
+                data.currentTarget.removeClass(settings.activeClass);
             }
 
-            if ( data.className && ( ( settings.className && data.className != settings.className ) || ! settings.className ) ) {
-                container.removeClass( data.className );
+            if (data.className && (settings.className && data.className != settings.className) || !settings.className) {
+                container.removeClass(data.className);
             }
 
-            if ( settings.className ) {
-                container.addClass( data.className = settings.className );
+            if (settings.className) {
+                container.addClass(data.className = settings.className);
             }
 
-            data.currentTarget = $( event.currentTarget );
+            data.currentTarget = $(event.currentTarget);
 
-            var dataContent = data.currentTarget.data("lightbox-content") || "";
-            var href = data.currentTarget.attr("href") || "";
+            var dataContent = data.currentTarget.data("lightbox-content") || "",
+                href = data.currentTarget.attr("href") || "";
 
-            if ( dataContent != "" ) {
-                load( dataContent );
-                toggle( true );
-            } else if ( href ) {
-                fetch( href );
+            if (dataContent !== "") {
+                load(dataContent);
+                toggle(true);
+            } else if (href) {
+                fetch(href);
             }
 
             data.container = container;
-            
-            data.currentTarget.addClass( settings.activeClass );
+
+            data.currentTarget.addClass(settings.activeClass);
 
             return false;
         }
 
-        if ( settings.closeOnClick ) {
-            $( settings.closeOnClick ).on("click.lightbox", close );
-            // $( settings.container ).unbind("click.lightbox");
+        if (settings.closeOnClick) {
+            $(settings.closeOnClick).on("click.lightbox", close);
+            // $(settings.container).unbind("click.lightbox");
         }
-        
-        this.click( handleClick );
 
+        $(document).on("lightbox-state-change", function(event, state /*, settings */) {
+            $(document.documentElement).toggleClass("lightbox-open", state);
+        });
+
+        this.on("click", settings.descendantSelector, handleClick);
         return this;
     };
 
@@ -148,11 +149,12 @@
         activeClass: "active",
         closeOnClick: ".lightbox-overlay, .lightbox-close, .lightbox-frame",
         closeOnESC: true,
-        processAjaxResponse: function( data, textStatus, jqXHR ) {
+        descendantSelector: null,
+        processAjaxResponse: function(data, textStatus, jqXHR) {
 
             var ct = jqXHR.getResponseHeader("content-type") || "";
 
-            if ( ct.indexOf('json') > -1 ) {
+            if (ct.indexOf("json") > -1) {
                 return data.content;
             }
 
@@ -160,4 +162,4 @@
         }
     };
 
-} ) );
+}));
