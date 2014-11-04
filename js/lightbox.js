@@ -1,14 +1,11 @@
-(function ( $ ) {
-
-    if ( ! window.console ) {
-        window.console = {
-            log: function(){},
-            info: function(){},
-            warn: function(){}
-        }
+( function ( factory ) {
+    if ( typeof define === 'function' && define.amd ) {
+        define( ['jquery'], factory );
+    } else {
+        factory( jQuery );
     }
-
-    $(document.documentElement).removeClass('no-js');
+}( function( $ ) {
+    "use strict";
 
     $.fn.lightbox = function( options ) {
 
@@ -163,4 +160,4 @@
         }
     };
 
-}( jQuery ));
+} ) );
