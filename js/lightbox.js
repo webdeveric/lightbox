@@ -70,6 +70,10 @@
                 data.currentTarget.removeClass(settings.activeClass).trigger("lightbox-closed");
             }
 
+            if ( data.container && data.extraClassName !== "" ) {
+                data.container.removeClass( data.extraClassName );
+            }
+
             dontlistenforESC();
         }
 
@@ -113,6 +117,12 @@
             var dataContent = data.currentTarget.data("lightbox-content") || "",
                 href = data.currentTarget.attr("href") || "";
 
+            if ( data.extraClassName !== "" ) {
+                data.currentTarget.removeClass( data.extraClassName );
+            }
+
+            data.extraClassName = data.currentTarget.data("lightbox-class") || "";
+
             if (dataContent !== "") {
                 load(dataContent);
                 toggle(true);
@@ -123,6 +133,7 @@
             data.container = container;
 
             data.currentTarget.addClass(settings.activeClass);
+            data.container.addClass( data.extraClassName );
 
             return false;
         }
