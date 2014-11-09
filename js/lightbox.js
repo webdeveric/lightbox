@@ -32,23 +32,24 @@
             $(document).unbind("keyup.lightbox");
         }
 
-        // function isOpen()
-        // {
-        //     return $(settings.container).hasClass(settings.isOpenClass);
-        // }
-
         function toggle(state)
         {
             state = state || false;
 
             data.container = $(settings.container);
 
+            if ( !state ) {
+                clearContents();
+            } else {
+                // Reset scroll
+                data.container.scrollTop( 0 );
+            }
+
             if (settings.className) {
                 data.container.toggleClass(settings.className, state);
             }
 
             data.container.toggleClass(settings.isOpenClass, state);
-            // $(document).trigger("lightbox-" + (state ? "open" : "close"), [ state ] );
             $(document).trigger("lightbox-state-change", [ state, settings ] );
 
         }
@@ -56,12 +57,11 @@
         function close(event)
         {
             if (event) {
-                event.preventDefault();
-                event.stopPropagation();
-                // console.log(event);
                 if (event.target != event.currentTarget) {
                     return;
                 }
+                event.preventDefault();
+                event.stopPropagation();
             }
 
             toggle(false);
@@ -77,10 +77,14 @@
             dontlistenforESC();
         }
 
+        function clearContents()
+        {
+            return $(settings.content).empty();
+        }
+
         function load(content)
         {
-            // console.info(content);
-            $(settings.content).empty().append(content);
+            clearContents().append(content);
         }
 
         function fetch(url)
